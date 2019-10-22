@@ -4,15 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace Blackjack
 {
-    class Program
+    class StockKaarten
     {
-        static void Main()
-        {
-            var spel = new Spel();
-            spel.SpelStarten();
-        }
+
     }
 }

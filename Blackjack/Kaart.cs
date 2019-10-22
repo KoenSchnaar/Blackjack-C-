@@ -21,7 +21,7 @@ namespace Blackjack
 
         public override string ToString()
         {
-            return $"{Nummer}{Kleur}";
+            return $"{Kleur} {Nummer}";
         }
     }
 }

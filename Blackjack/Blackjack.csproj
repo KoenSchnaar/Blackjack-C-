@@ -43,11 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\shuffleExtension.cs" />
     <Compile Include="Kaart.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spel.cs" />
     <Compile Include="Speler.cs" />
+    <Compile Include="StockKaarten.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

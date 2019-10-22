@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Blackjack.Extensions;
 
 namespace Blackjack
 {
@@ -13,7 +14,17 @@ namespace Blackjack
 
         public void SpelStarten()
         {
+            KaartspelMaken();
+            kaarten = kaarten.Shuffle();
+            for (int i = 0; i < 52; i++)
+            {
+                speler.Waarde += kaarten[i].Nummer;
+                Console.WriteLine(speler.Waarde);
+                Console.ReadKey(true);
+
+            }
             
+
         }
         
         
@@ -30,12 +41,7 @@ namespace Blackjack
                     kaarten.Add(new Kaart(nummers[x], kleuren[y]));
                 }
             }
-            for (int i = 0; i < 52; i++)
-            {
-                Console.WriteLine(kaarten[i]);
-            }
             
-            Console.ReadLine();
         }
     }
 }
