@@ -11,5 +11,6 @@ namespace Blackjack
         public int Waarde { get; set; }
         public int AantalKaarten { get; set; }
         public bool Blackjack { get; set; }
+        public bool LaatsteKaartGepakt { get; set; }
     }
 }

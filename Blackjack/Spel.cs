@@ -14,17 +14,32 @@ namespace Blackjack
 
         public void SpelStarten()
         {
-            var kaarten = deck.KaartspelMaken();
-            
-            for (int i = 0; i < 52; i++)
+
+            while (speler.LaatsteKaartGepakt != true)
             {
-                speler.Waarde += kaarten[i].Nummer;
-                Console.WriteLine(speler.Waarde);
-                Console.ReadKey(true);
+                
+                ConsoleKeyInfo result = Console.ReadKey(true);
+                if (result.KeyChar == 'k')
+                {
+                    KaartTrekken();
+                }
+
+                else if(result.KeyChar == 'p')
+                {
+                    speler.LaatsteKaartGepakt = true;
+                }
 
             }
-            
+        }
 
+        public void KaartTrekken()
+        {
+            int i = 0;
+            var kaarten = deck.KaartspelMaken();
+
+            speler.Waarde += kaarten[i].Nummer;
+            Console.WriteLine("Je hebt een " + kaarten[i] + " gepakt. De waarde van je hand is nu " + speler.Waarde);
+            i += 1;
         }
     }
 }
