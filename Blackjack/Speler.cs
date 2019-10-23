@@ -11,6 +11,12 @@ namespace Blackjack
         public int Waarde { get; set; }
         public int AantalKaarten { get; set; }
         public bool Blackjack { get; set; }
+        public bool EersteBeurt { get; set; }
         public bool LaatsteKaartGepakt { get; set; }
+
+        public Speler()
+        {
+            this.EersteBeurt = true;
+        }
     }
 }
