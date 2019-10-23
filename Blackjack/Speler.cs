@@ -30,38 +30,30 @@ namespace Blackjack
             Hand.Add(kaart);
         }
 
-        public void EerstebeurtSpeler(Kaart kaart1, Kaart kaart2, Speler speler)
+        public void EerstebeurtSpeler(Kaart kaart1, Kaart kaart2)
         {
-            Hand.Add(kaart1);
-            Hand.Add(kaart2);
-            if (GetStatus() == CheckWaarden.Blackjack)
-            {
-                Console.WriteLine("BLACKJACK EASY MONEY!");
-                speler.LaatsteKaartGepakt = true;
-            }
-            else
-            {
-                Console.WriteLine("je hebt een " + kaart1 + " en een " + kaart2 + " gepakt. De waarde van je hand is " + speler.Waarde);
-            }
-            speler.EersteBeurt = false;
+            KaartVerwerken(kaart1);
+            KaartVerwerken(kaart2);
+            EersteBeurt = false;
+            Console.WriteLine("je hebt een " + kaart1 + " en een " + kaart2 + " gepakt. De waarde van je hand is " + Waarde);
         }
 
-        public void KaartVerwerken(Kaart kaart, Speler speler)
+        public string KaartVerwerken(Kaart kaart)
         {
             Hand.Add(kaart);
             if (GetStatus() == CheckWaarden.Blackjack)
             {
-                Console.WriteLine("Blackjack!");
-                speler.LaatsteKaartGepakt = true;
+                LaatsteKaartGepakt = true;
+                return "Blackjack! Je hebt een " + kaart + " gepakt. De waarde van je hand is nu ";
             }
             else if (GetStatus() == CheckWaarden.Af)
             {
-                Console.WriteLine("Je bent af! Je hebt een " + kaart + " gepakt. De waarde van je hand is nu " + speler.Waarde);
-                speler.LaatsteKaartGepakt = true;
+                LaatsteKaartGepakt = true;
+                return "Je bent af! Je hebt een " + kaart + " gepakt. De waarde van je hand is nu " + Waarde;
             }
             else
             {
-                Console.WriteLine("Je hebt een " + kaart + " gepakt. De waarde van je hand is nu " + speler.Waarde);
+                return "Je hebt een " + kaart + " gepakt. De waarde van je hand is nu " + Waarde;
             }
         }
 
