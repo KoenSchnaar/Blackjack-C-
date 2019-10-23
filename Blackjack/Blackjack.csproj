@@ -46,6 +46,7 @@
     <Compile Include="EnumCheckWaarde.cs" />
     <Compile Include="Extensions\shuffleExtension.cs" />
     <Compile Include="Kaart.cs" />
+    <Compile Include="MessageDelegate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spel.cs" />

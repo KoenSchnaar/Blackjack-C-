@@ -12,6 +12,7 @@ namespace Blackjack
         private Speler speler = new Speler();
         private Speler dealer = new Speler();
         private DeckKaarten deck = new DeckKaarten();
+        public event MessageDelegate OnMessage;
         int Kaartnummer = 0;
 
         public void SpelStarten()
@@ -20,7 +21,7 @@ namespace Blackjack
             //dealer pakt eerste kaart
             var EersteKaart = KaartTrekken(kaarten, Kaartnummer);
             dealer.EersteKaartDealer(EersteKaart);
-            Console.WriteLine("De dealer heeft een " + EersteKaart + " gepakt. " + dealer.Waarde);
+            OnMessage("De dealer heeft een " + EersteKaart + " gepakt. " + dealer.Waarde);
 
 
             
@@ -33,13 +34,14 @@ namespace Blackjack
                     {
                         Kaart kaart1 = KaartTrekken(kaarten, Kaartnummer);
                         Kaart kaart2 = KaartTrekken(kaarten, Kaartnummer);
-                        speler.EerstebeurtSpeler(kaart1, kaart2);
+                        string tekstEersteBeurt = speler.EerstebeurtSpeler(kaart1, kaart2);
+                        OnMessage(tekstEersteBeurt);
                     }
                     else
                     {
                         var GepakteKaart = KaartTrekken(kaarten, Kaartnummer);
-                        string tekst = speler.KaartVerwerken(GepakteKaart);
-                        Console.WriteLine(tekst);
+                        string tekstStatus = speler.KaartVerwerken(GepakteKaart);
+                        OnMessage(tekstStatus);
                     }
                 }
                 else if(result.KeyChar == 'p')

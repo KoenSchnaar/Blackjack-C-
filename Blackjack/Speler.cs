@@ -30,12 +30,12 @@ namespace Blackjack
             Hand.Add(kaart);
         }
 
-        public void EerstebeurtSpeler(Kaart kaart1, Kaart kaart2)
+        public string EerstebeurtSpeler(Kaart kaart1, Kaart kaart2)
         {
             KaartVerwerken(kaart1);
             KaartVerwerken(kaart2);
             EersteBeurt = false;
-            Console.WriteLine("je hebt een " + kaart1 + " en een " + kaart2 + " gepakt. De waarde van je hand is " + Waarde);
+            return "je hebt een " + kaart1 + " en een " + kaart2 + " gepakt. De waarde van je hand is " + Waarde;
         }
 
         public string KaartVerwerken(Kaart kaart)
