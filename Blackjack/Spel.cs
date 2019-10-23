@@ -17,7 +17,8 @@ namespace Blackjack
         {
             int kaartnummer = 1;
             var kaarten = deck.KaartspelMaken();
-            KaartTrekken(kaarten, 0);
+            var EersteKaart = KaartTrekken(kaarten, 0, dealer);
+            Console.WriteLine("De dealer heeft een " + EersteKaart + " gepakt. " + dealer.Waarde);
 
 
             while (speler.LaatsteKaartGepakt != true)
@@ -25,7 +26,8 @@ namespace Blackjack
                 ConsoleKeyInfo result = Console.ReadKey(true);
                 if (result.KeyChar == 'k')
                 {
-                    KaartTrekken(kaarten, kaartnummer);
+                    var GepakteKaart = KaartTrekken(kaarten, kaartnummer, speler);
+                    Console.WriteLine("Je hebt een " + GepakteKaart + " gepakt. De waarde van je hand is nu " + speler.Waarde);
                     kaartnummer++;
                 }
                 else if(result.KeyChar == 'p')
@@ -36,10 +38,10 @@ namespace Blackjack
             }
         }
 
-        public void KaartTrekken(List<Kaart> kaarten, int kaartnummer)
+        public Kaart KaartTrekken(List<Kaart> kaarten, int kaartnummer, Speler speler)
         {
             speler.Waarde += kaarten[kaartnummer].Nummer;
-            Console.WriteLine("Je hebt een " + kaarten[kaartnummer] + " gepakt. De waarde van je hand is nu " + speler.Waarde);
+            return kaarten[kaartnummer];
         }
     }
 }
