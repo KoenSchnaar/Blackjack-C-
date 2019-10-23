@@ -19,6 +19,7 @@ namespace Blackjack
             var kaarten = deck.KaartspelMaken();
             //dealer pakt eerste kaart
             var EersteKaart = KaartTrekken(kaarten, Kaartnummer, dealer);
+            dealer.EersteKaartDealer(EersteKaart);
             Console.WriteLine("De dealer heeft een " + EersteKaart + " gepakt. " + dealer.Waarde);
 
 
@@ -28,17 +29,17 @@ namespace Blackjack
                 ConsoleKeyInfo result = Console.ReadKey(true);
                 if (result.KeyChar == 'k')
                 {
+
                     if (speler.EersteBeurt)
                     {
                         Kaart kaart1 = KaartTrekken(kaarten, Kaartnummer, speler);
                         Kaart kaart2 = KaartTrekken(kaarten, Kaartnummer, speler);
-                        Console.WriteLine("je hebt een " + kaart1 + "en een " + kaart2 + " gepakt. De waarde van je hand is " + speler.Waarde);
-                        speler.EersteBeurt = false;
+                        speler.EerstebeurtSpeler(kaart1, kaart2, speler);
                     }
                     else
                     {
                         var GepakteKaart = KaartTrekken(kaarten, Kaartnummer, speler);
-                        Console.WriteLine("Je hebt een " + GepakteKaart + " gepakt. De waarde van je hand is nu " + speler.Waarde);
+                        speler.KaartVerwerken(GepakteKaart, speler);
                     }
                 }
                 else if(result.KeyChar == 'p')
@@ -49,23 +50,26 @@ namespace Blackjack
             }
         }
 
-        private Kaart KaartTrekken(List<Kaart> kaarten, int kaartnummer, Speler speler)
+        public Kaart KaartTrekken(List<Kaart> kaarten, int kaartnummer, Speler speler)
         {
-            speler.Waarde += kaarten[kaartnummer].Nummer;
             Kaartnummer++;
             return kaarten[kaartnummer];
         }
-
-        private void CheckRegels(int HandWaarde)
+        private CheckWaarden CheckRegels(int HandWaarde)
         {
-            if (HandWaarde < 21)
+            if (HandWaarde > 21)
             {
-
+                return CheckWaarden.Af;
             }
             else if (HandWaarde == 21)
             {
-
+                return CheckWaarden.Blackjack;
+            }
+            else
+            {
+                return CheckWaarden.Niks;
             }
         }
+
     }
 }
