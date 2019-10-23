@@ -9,11 +9,9 @@ namespace Blackjack
 {
     class DeckKaarten
     {
-        private List<Kaart> kaarten = new List<Kaart>();
-              
-
-        public List<Kaart> KaartspelMaken()
+        public static Stack<Kaart> KaartspelMaken()
         {
+            var kaarten = new List<Kaart>();
             string[] kleuren = new string[] { "Harten", "Schoppen", "Ruiten", "Klaver" };
 
             for (int y = 0; y < kleuren.Length; y++)    
@@ -28,10 +26,7 @@ namespace Blackjack
                 }
             }
 
-            kaarten = kaarten.Shuffle();
-
-            return kaarten;
-
+            return kaarten.Shuffle();
         }
 
     }

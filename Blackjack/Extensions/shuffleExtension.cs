@@ -9,16 +9,16 @@ namespace Blackjack.Extensions
 {
     public static class shuffleExtension
     {
-        public static List<Kaart> Shuffle (this List<Kaart> inputList)
+        public static Stack<Kaart> Shuffle (this List<Kaart> inputList)
         {
-            List<Kaart> randomList = new List<Kaart>();
+            Stack<Kaart> randomList = new Stack<Kaart>();
 
             Random rnd = new Random();
           
             while (inputList.Count>0)
             {
                 var randomIndex = rnd.Next(0, inputList.Count);
-                randomList.Add(inputList[randomIndex]);
+                randomList.Push(inputList[randomIndex]);
                 inputList.RemoveAt(randomIndex);
             }
             return randomList;

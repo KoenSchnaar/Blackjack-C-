@@ -11,9 +11,9 @@ namespace Blackjack
     {
         private Speler dealer = new Speler("Dealer");
         private List<Speler> spelers = new List<Speler>();
-        private DeckKaarten deck = new DeckKaarten();
+        private Stack<Kaart> kaarten;
+        
         public event MessageDelegate OnMessage;
-        int Kaartnummer = 0;
 
         public void SpelAanmaken()
         {
@@ -41,21 +41,21 @@ namespace Blackjack
 
         public void SpelStarten()
         {
-            var kaarten = deck.KaartspelMaken();
-            var EersteKaart = KaartTrekken(kaarten, Kaartnummer);
+            kaarten = DeckKaarten.KaartspelMaken();
+            var EersteKaart = KaartTrekken();
             dealer.EersteKaartDealer(EersteKaart);
             OnMessage("De dealer heeft een " + EersteKaart + " gepakt.");
             foreach (Speler speler in spelers)
             {
-                Kaart kaart1 = KaartTrekken(kaarten, Kaartnummer);
-                Kaart kaart2 = KaartTrekken(kaarten, Kaartnummer);
+                Kaart kaart1 = KaartTrekken();
+                Kaart kaart2 = KaartTrekken();
                 string tekstEersteBeurt = speler.EerstebeurtSpeler(kaart1, kaart2);
                 OnMessage(tekstEersteBeurt);
             }
-            SpelSpelen(kaarten);
+            SpelSpelen();
         }
 
-        private void SpelSpelen(List<Kaart> kaarten)
+        private void SpelSpelen()
         {
             foreach (Speler speler in spelers)
             {
@@ -65,7 +65,7 @@ namespace Blackjack
                     ConsoleKeyInfo result = Console.ReadKey(true);
                     if (result.KeyChar == 'k')
                     {
-                        var GepakteKaart = KaartTrekken(kaarten, Kaartnummer);
+                        Kaart GepakteKaart = KaartTrekken();
                         string tekstStatus = speler.KaartVerwerken(GepakteKaart);
                         OnMessage(tekstStatus);
                     }
@@ -75,12 +75,18 @@ namespace Blackjack
                     }
                 }
             }
+            do
+            {
+                Kaart DealerKaart = KaartTrekken();
+                string dealerMessage = dealer.DealerKaarten(DealerKaart);
+                OnMessage(dealerMessage);
+                Console.ReadKey(true);
+            } while (dealer.LaatsteKaartGepakt == false);
         }
 
-        private Kaart KaartTrekken(List<Kaart> kaarten, int kaartnummer)
+        private Kaart KaartTrekken()
         {
-            Kaartnummer++;
-            return kaarten[kaartnummer];
+            return kaarten.Pop();
         }
 
         private void SpelerToevoegen(string naam)

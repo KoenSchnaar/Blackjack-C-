@@ -59,6 +59,17 @@ namespace Blackjack
             }
         }
 
+        public string DealerKaarten(Kaart kaart)
+        {
+            Hand.Add(kaart);
+
+            if (Waarde > 16)
+            {
+                LaatsteKaartGepakt = true;
+            }
+            return "De dealer heeft een " + kaart + " gepakt en heeft totale waarde van " + Waarde;
+        }
+
         public CheckWaarden GetStatus()
         {
             if (Waarde > 21)
