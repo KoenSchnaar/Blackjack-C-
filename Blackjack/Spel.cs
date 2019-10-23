@@ -10,20 +10,24 @@ namespace Blackjack
     class Spel
     {
         private Speler speler = new Speler();
+        private Speler dealer = new Speler();
         private DeckKaarten deck = new DeckKaarten();
 
         public void SpelStarten()
         {
+            int kaartnummer = 1;
+            var kaarten = deck.KaartspelMaken();
+            KaartTrekken(kaarten, 0);
+
 
             while (speler.LaatsteKaartGepakt != true)
             {
-                
                 ConsoleKeyInfo result = Console.ReadKey(true);
                 if (result.KeyChar == 'k')
                 {
-                    KaartTrekken();
+                    KaartTrekken(kaarten, kaartnummer);
+                    kaartnummer++;
                 }
-
                 else if(result.KeyChar == 'p')
                 {
                     speler.LaatsteKaartGepakt = true;
@@ -32,14 +36,10 @@ namespace Blackjack
             }
         }
 
-        public void KaartTrekken()
+        public void KaartTrekken(List<Kaart> kaarten, int kaartnummer)
         {
-            int i = 0;
-            var kaarten = deck.KaartspelMaken();
-
-            speler.Waarde += kaarten[i].Nummer;
-            Console.WriteLine("Je hebt een " + kaarten[i] + " gepakt. De waarde van je hand is nu " + speler.Waarde);
-            i += 1;
+            speler.Waarde += kaarten[kaartnummer].Nummer;
+            Console.WriteLine("Je hebt een " + kaarten[kaartnummer] + " gepakt. De waarde van je hand is nu " + speler.Waarde);
         }
     }
 }
