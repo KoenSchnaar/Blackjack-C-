@@ -15,12 +15,14 @@ namespace Blackjack
                 return totaalWaarde;
             } }
         public int AantalKaarten { get; set; }
+        public string Naam { get; set; }
         public bool EersteBeurt { get; set; }
         public bool LaatsteKaartGepakt { get; set; }
         private List<Kaart> Hand = new List<Kaart>();
 
-        public Speler()
+        public Speler(string naam)
         {
+            this.Naam = naam;
             this.EersteBeurt = true;
             LaatsteKaartGepakt = false;
         }
@@ -35,7 +37,7 @@ namespace Blackjack
             KaartVerwerken(kaart1);
             KaartVerwerken(kaart2);
             EersteBeurt = false;
-            return "je hebt een " + kaart1 + " en een " + kaart2 + " gepakt. De waarde van je hand is " + Waarde;
+            return Naam + " heeft een " + kaart1 + " en een " + kaart2 + " gepakt. De waarde van z'n hand is " + Waarde;
         }
 
         public string KaartVerwerken(Kaart kaart)
@@ -44,16 +46,16 @@ namespace Blackjack
             if (GetStatus() == CheckWaarden.Blackjack)
             {
                 LaatsteKaartGepakt = true;
-                return "Blackjack! Je hebt een " + kaart + " gepakt. De waarde van je hand is nu ";
+                return "Blackjack! " + Naam + " heeft een " + kaart + " gepakt. De waarde van z'n hand is nu ";
             }
             else if (GetStatus() == CheckWaarden.Af)
             {
                 LaatsteKaartGepakt = true;
-                return "Je bent af! Je hebt een " + kaart + " gepakt. De waarde van je hand is nu " + Waarde;
+                return Naam + " is af! Je hebt een " + kaart + " gepakt. De waarde van z'n hand is nu " + Waarde;
             }
             else
             {
-                return "Je hebt een " + kaart + " gepakt. De waarde van je hand is nu " + Waarde;
+                return Naam + " heeft een " + kaart + " gepakt. De waarde van z'n hand is nu " + Waarde;
             }
         }
 

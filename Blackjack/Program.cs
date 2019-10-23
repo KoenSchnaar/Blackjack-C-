@@ -13,7 +13,7 @@ namespace Blackjack
         {
             var spel = new Spel();
             spel.OnMessage += IncomingMessage;
-            spel.SpelStarten();
+            spel.SpelAanmaken();
         }
 
         static void IncomingMessage(string message)
