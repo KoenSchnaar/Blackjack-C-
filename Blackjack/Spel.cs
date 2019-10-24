@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Blackjack.Extensions;
 
@@ -32,7 +33,7 @@ namespace Blackjack
                 else if (gedrukt.KeyChar == 'r')
                 {
                     InzetRegelen();
-                    OnMessage("Het spel begint! Druk op een toets om de dealer de eerste kaart te laten pakken.");
+                    OnMessage("Het spel begint! Druk op een toets om de dealer de kaarten te laten dealen.");
                     Console.ReadKey(true);
                     starten = true;
                 }
@@ -57,12 +58,14 @@ namespace Blackjack
             var EersteKaart = KaartTrekken();
             dealer.EersteKaartDealer(EersteKaart);
             OnMessage("De dealer heeft een " + EersteKaart + " gepakt.");
+            Thread.Sleep(1000);
             foreach (Speler speler in spelers)
             {
                 Kaart kaart1 = KaartTrekken();
                 Kaart kaart2 = KaartTrekken();
                 string tekstEersteBeurt = speler.EerstebeurtSpeler(kaart1, kaart2);
                 OnMessage(tekstEersteBeurt);
+                Thread.Sleep(1000);
             }
             SpelSpelen();
         }
@@ -99,6 +102,7 @@ namespace Blackjack
             {
                 string winMessage = speler.GewonnenCheck(dealer.Waarde);
                 OnMessage(winMessage);
+                Thread.Sleep(500);
                 speler.Inzet = 0;
             }
             Console.ReadKey(true);

@@ -8,12 +8,7 @@ namespace Blackjack
 {
     public class Speler
     {
-        public int Waarde { get {
-                var totaalWaarde = 0;
-                foreach (var kaart in Hand)
-                    totaalWaarde += kaart.Nummer;
-                return totaalWaarde;
-            } }
+        public int Waarde { get { return GetWaardeHand(); } }
         public string Naam { get; set; }
         public bool EersteBeurt { get; set; }
         public bool LaatsteKaartGepakt { get; set; }
@@ -55,6 +50,7 @@ namespace Blackjack
             }
             else if (Waarde > 21)
             {
+
                 LaatsteKaartGepakt = true;
                 Busted = true;
                 return Naam + " is af! Je hebt een " + kaart + " gepakt. De waarde van z'n hand is nu " + Waarde;
@@ -98,6 +94,27 @@ namespace Blackjack
             {
                 return Naam + " heeft verloren en verliest de inzet van " + Inzet + ".";
             }
+        }
+
+        private int GetWaardeHand()
+        {
+            var totaalWaarde = 0;
+            var AantalAas = 0;
+            foreach (var kaart in Hand)
+            {
+                totaalWaarde += kaart.Nummer;
+                if (kaart is Aas)
+                {
+                    AantalAas += 1;
+                }
+            }
+                
+            while(totaalWaarde > 21 && AantalAas > 0)
+            {
+                totaalWaarde -= 10;
+                AantalAas -= 1;
+            }
+            return totaalWaarde;
         }
     }
 }
