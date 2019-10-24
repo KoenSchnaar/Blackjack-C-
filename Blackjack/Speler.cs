@@ -15,7 +15,7 @@ namespace Blackjack
         public bool Busted { get; set; }
         public int Bank { get; set; }
         public int Inzet { get; set; }
-        private List<Kaart> Hand = new List<Kaart>();
+        public List<Kaart> Hand = new List<Kaart>();
 
         public Speler(string naam)
         {

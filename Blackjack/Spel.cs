@@ -13,7 +13,7 @@ namespace Blackjack
         private Speler dealer = new Speler("Dealer");
         private List<Speler> spelers = new List<Speler>();
         private Stack<Kaart> kaarten;
-        
+
         public event MessageDelegate OnMessage;
 
         public void SpelAanmaken()
@@ -103,9 +103,8 @@ namespace Blackjack
                 string winMessage = speler.GewonnenCheck(dealer.Waarde);
                 OnMessage(winMessage);
                 Thread.Sleep(500);
-                speler.Inzet = 0;
             }
-            Console.ReadKey(true);
+            ResetVoorNieuweRonde();
         }
 
         private Kaart KaartTrekken()
@@ -122,6 +121,21 @@ namespace Blackjack
         {
             int inzet = Convert.ToInt32(input);
             return inzet;
+        }
+        public void ResetVoorNieuweRonde()
+        {
+            foreach (Speler speler in spelers)
+            {
+                speler.Hand.Clear();
+                speler.Inzet = 0;
+                speler.LaatsteKaartGepakt = false;
+            }
+            dealer.Hand.Clear();
+            dealer.LaatsteKaartGepakt = false;
+            kaarten = DeckKaarten.KaartspelMaken();
+            Console.ReadKey(true);
+            InzetRegelen();
+            SpelStarten();
         }
     }
 }
