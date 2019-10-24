@@ -14,17 +14,22 @@ namespace Blackjack
                     totaalWaarde += kaart.Nummer;
                 return totaalWaarde;
             } }
-        public int AantalKaarten { get; set; }
         public string Naam { get; set; }
         public bool EersteBeurt { get; set; }
         public bool LaatsteKaartGepakt { get; set; }
+        public bool Busted { get; set; }
+        public int Bank { get; set; }
+        public int Inzet { get; set; }
         private List<Kaart> Hand = new List<Kaart>();
 
         public Speler(string naam)
         {
             this.Naam = naam;
             this.EersteBeurt = true;
-            LaatsteKaartGepakt = false;
+            this.LaatsteKaartGepakt = false;
+            this.Busted = false;
+            this.Bank = 10;
+            this.Inzet = 0;
         }
 
         public void EersteKaartDealer(Kaart kaart)
@@ -43,14 +48,15 @@ namespace Blackjack
         public string KaartVerwerken(Kaart kaart)
         {
             Hand.Add(kaart);
-            if (GetStatus() == CheckWaarden.Blackjack)
+            if (Waarde == 21)
             {
                 LaatsteKaartGepakt = true;
                 return "Blackjack! " + Naam + " heeft een " + kaart + " gepakt. De waarde van z'n hand is nu ";
             }
-            else if (GetStatus() == CheckWaarden.Af)
+            else if (Waarde > 21)
             {
                 LaatsteKaartGepakt = true;
+                Busted = true;
                 return Naam + " is af! Je hebt een " + kaart + " gepakt. De waarde van z'n hand is nu " + Waarde;
             }
             else
@@ -62,27 +68,35 @@ namespace Blackjack
         public string DealerKaarten(Kaart kaart)
         {
             Hand.Add(kaart);
-
+            string displayTekst = "";
             if (Waarde > 16)
             {
                 LaatsteKaartGepakt = true;
+                displayTekst = "De dealer heeft een " + kaart + " gepakt en heeft totale waarde van " + Waarde;
             }
-            return "De dealer heeft een " + kaart + " gepakt en heeft totale waarde van " + Waarde;
+            if( Waarde > 21 )
+            {
+                Busted = true;
+                displayTekst = "De dealer is busted. Hij heeft een " + kaart + " gepakt en hierdoor is zijn handwaarde " + Waarde + ".";
+            }
+            return displayTekst;
         }
 
-        public CheckWaarden GetStatus()
+        public string GewonnenCheck(int dealerWaarde)
         {
-            if (Waarde > 21)
+            if (Waarde > 16 && Waarde < 22 && Waarde > dealerWaarde || Waarde < 22 && dealerWaarde > 21)
             {
-                return CheckWaarden.Af;
+                Bank += ( Inzet * 2 );
+                return Naam + " heeft gewonnen en wint " + (Inzet * 2) + ". De hoogte van z'n bank is nu " + Bank;
             }
-            else if (Waarde == 21)
+            else if(Waarde > 16 && Waarde < 22 && Waarde == dealerWaarde)
             {
-                return CheckWaarden.Blackjack;
+                Bank += Inzet;
+                return Naam + " heeft even hoog als de dealer en krijgt de inzet van " + Inzet + " terug.";
             }
             else
             {
-                return CheckWaarden.Niks;
+                return Naam + " heeft verloren en verliest de inzet van " + Inzet + ".";
             }
         }
     }

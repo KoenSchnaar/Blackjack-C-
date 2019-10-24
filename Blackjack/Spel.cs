@@ -31,12 +31,24 @@ namespace Blackjack
                 }
                 else if (gedrukt.KeyChar == 'r')
                 {
+                    InzetRegelen();
                     OnMessage("Het spel begint! Druk op een toets om de dealer de eerste kaart te laten pakken.");
                     Console.ReadKey(true);
                     starten = true;
                 }
             } while (starten == false);
             SpelStarten();
+        }
+
+        public void InzetRegelen()
+        {
+            foreach (Speler speler in spelers)
+            {
+                Console.WriteLine(speler.Naam + ", voer je inzet in en druk op enter.");
+                int input = GeldInzetten(Console.ReadLine());
+                speler.Inzet = input;
+                speler.Bank -= input;
+            }
         }
 
         public void SpelStarten()
@@ -82,6 +94,14 @@ namespace Blackjack
                 OnMessage(dealerMessage);
                 Console.ReadKey(true);
             } while (dealer.LaatsteKaartGepakt == false);
+            
+            foreach (Speler speler in spelers)
+            {
+                string winMessage = speler.GewonnenCheck(dealer.Waarde);
+                OnMessage(winMessage);
+                speler.Inzet = 0;
+            }
+            Console.ReadKey(true);
         }
 
         private Kaart KaartTrekken()
@@ -92,6 +112,12 @@ namespace Blackjack
         private void SpelerToevoegen(string naam)
         {
             spelers.Add(new Speler(naam));
+        }
+        
+        public int GeldInzetten(string input)
+        {
+            int inzet = Convert.ToInt32(input);
+            return inzet;
         }
     }
 }

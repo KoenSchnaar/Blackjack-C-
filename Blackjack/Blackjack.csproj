@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EnumCheckWaarde.cs" />
     <Compile Include="Extensions\shuffleExtension.cs" />
     <Compile Include="Kaart.cs" />
     <Compile Include="MessageDelegate.cs" />
