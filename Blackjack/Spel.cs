@@ -74,7 +74,7 @@ namespace Blackjack
         {
             foreach (Speler speler in spelers)
             {
-                OnMessage(speler.Naam + " is aan de beurt. Druk op 'k' om een kaart te pakken of op 'p' om te passen. Je handwaarde is " + speler.Waarde);
+                OnMessage(speler.Naam + " is aan de beurt. Druk op 'k' om een kaart te pakken, op 'p' om te passen of op 'd' voor een DubbleDown. Je handwaarde is " + speler.Waarde);
                 while (speler.LaatsteKaartGepakt != true)
                 {
                     ConsoleKeyInfo result = Console.ReadKey(true);
@@ -83,6 +83,13 @@ namespace Blackjack
                         Kaart GepakteKaart = KaartTrekken();
                         string tekstStatus = speler.KaartVerwerken(GepakteKaart);
                         OnMessage(tekstStatus);
+                    }
+                    else if (result.KeyChar == 'd')
+                    {
+                        Kaart GepakteKaart = KaartTrekken();
+                        string DDTekst = speler.DubbleDown(GepakteKaart);
+                        OnMessage(DDTekst);
+                        Thread.Sleep(1000);
                     }
                     else if (result.KeyChar == 'p')
                     {

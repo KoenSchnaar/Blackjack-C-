@@ -95,6 +95,14 @@ namespace Blackjack
                 return Naam + " heeft verloren en verliest de inzet van " + Inzet + ".";
             }
         }
+        public string DubbleDown(Kaart kaart)
+        {
+            Bank -= Inzet;
+            Inzet *= 2;
+            string gepakteKaart = KaartVerwerken(kaart);
+            LaatsteKaartGepakt = true;
+            return gepakteKaart + " Je inzet is verhoogd naar " + Inzet + ". Dit was je laatste kaart";
+        }
 
         private int GetWaardeHand()
         {
