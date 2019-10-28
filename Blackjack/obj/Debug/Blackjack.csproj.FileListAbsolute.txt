@@ -4,3 +4,8 @@ C:\Users\Koen\source\repos\Blackjack\Blackjack\bin\Debug\Blackjack.exe
 C:\Users\Koen\source\repos\Blackjack\Blackjack\bin\Debug\Blackjack.pdb
 C:\Users\Koen\source\repos\Blackjack\Blackjack\obj\Debug\Blackjack.exe
 C:\Users\Koen\source\repos\Blackjack\Blackjack\obj\Debug\Blackjack.pdb
+C:\Users\Koen\source\repos\Blackjack\Blackjack\bin\Debug\EntityFramework.dll
+C:\Users\Koen\source\repos\Blackjack\Blackjack\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Koen\source\repos\Blackjack\Blackjack\bin\Debug\EntityFramework.xml
+C:\Users\Koen\source\repos\Blackjack\Blackjack\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Koen\source\repos\Blackjack\Blackjack\obj\Debug\Blackjack.csproj.CopyComplete

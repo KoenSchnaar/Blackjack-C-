@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SpellenModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sessies">
+    <Key>
+      <PropertyRef Name="sessie_ID" />
+    </Key>
+    <Property Name="sessie_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="speler_ID" Type="int" Nullable="false" />
+    <Property Name="spel_ID" Type="int" Nullable="false" />
+    <Property Name="staat" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="actief" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="spelers">
+    <Key>
+      <PropertyRef Name="speler_ID" />
+    </Key>
+    <Property Name="speler_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="spelernaam" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="spellen">
+    <Key>
+      <PropertyRef Name="spel_ID" />
+    </Key>
+    <Property Name="spel_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="spelnaam" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="uitslagen">
+    <Key>
+      <PropertyRef Name="uitslag_ID" />
+    </Key>
+    <Property Name="uitslag_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="speler_ID" Type="int" Nullable="false" />
+    <Property Name="spel_ID" Type="int" Nullable="false" />
+    <Property Name="uitslag" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_sessies_spelers">
+    <End Role="spelers" Type="Self.spelers" Multiplicity="1" />
+    <End Role="sessies" Type="Self.sessies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="spelers">
+        <PropertyRef Name="speler_ID" />
+      </Principal>
+      <Dependent Role="sessies">
+        <PropertyRef Name="speler_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_sessies_spellen">
+    <End Role="spellen" Type="Self.spellen" Multiplicity="1" />
+    <End Role="sessies" Type="Self.sessies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="spellen">
+        <PropertyRef Name="spel_ID" />
+      </Principal>
+      <Dependent Role="sessies">
+        <PropertyRef Name="spel_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_spelers_spelers">
+    <End Role="spelers" Type="Self.spelers" Multiplicity="1" />
+    <End Role="spelers1" Type="Self.spelers" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="spelers">
+        <PropertyRef Name="speler_ID" />
+      </Principal>
+      <Dependent Role="spelers1">
+        <PropertyRef Name="speler_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_uitslagen_spelers">
+    <End Role="spelers" Type="Self.spelers" Multiplicity="1" />
+    <End Role="uitslagen" Type="Self.uitslagen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="spelers">
+        <PropertyRef Name="speler_ID" />
+      </Principal>
+      <Dependent Role="uitslagen">
+        <PropertyRef Name="speler_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_uitslagen_spellen">
+    <End Role="spellen" Type="Self.spellen" Multiplicity="1" />
+    <End Role="uitslagen" Type="Self.uitslagen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="spellen">
+        <PropertyRef Name="spel_ID" />
+      </Principal>
+      <Dependent Role="uitslagen">
+        <PropertyRef Name="spel_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SpellenModelStoreContainer">
+    <EntitySet Name="sessies" EntityType="Self.sessies" Schema="alleSpellen" store:Type="Tables" />
+    <EntitySet Name="spelers" EntityType="Self.spelers" Schema="alleSpellen" store:Type="Tables" />
+    <EntitySet Name="spellen" EntityType="Self.spellen" Schema="alleSpellen" store:Type="Tables" />
+    <EntitySet Name="uitslagen" EntityType="Self.uitslagen" Schema="alleSpellen" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_sessies_spelers" Association="Self.FK_sessies_spelers">
+      <End Role="spelers" EntitySet="spelers" />
+      <End Role="sessies" EntitySet="sessies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_sessies_spellen" Association="Self.FK_sessies_spellen">
+      <End Role="spellen" EntitySet="spellen" />
+      <End Role="sessies" EntitySet="sessies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_spelers_spelers" Association="Self.FK_spelers_spelers">
+      <End Role="spelers" EntitySet="spelers" />
+      <End Role="spelers1" EntitySet="spelers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_uitslagen_spelers" Association="Self.FK_uitslagen_spelers">
+      <End Role="spelers" EntitySet="spelers" />
+      <End Role="uitslagen" EntitySet="uitslagen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_uitslagen_spellen" Association="Self.FK_uitslagen_spellen">
+      <End Role="spellen" EntitySet="spellen" />
+      <End Role="uitslagen" EntitySet="uitslagen" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -70,7 +70,7 @@ namespace Blackjack
                 LaatsteKaartGepakt = true;
                 displayTekst = "De dealer heeft een " + kaart + " gepakt en heeft totale waarde van " + Waarde;
             }
-            if( Waarde > 21 )
+            if (Waarde > 21)
             {
                 Busted = true;
                 displayTekst = "De dealer is busted. Hij heeft een " + kaart + " gepakt en hierdoor is zijn handwaarde " + Waarde + ".";
@@ -82,10 +82,10 @@ namespace Blackjack
         {
             if (Waarde > 16 && Waarde < 22 && Waarde > dealerWaarde || Waarde < 22 && dealerWaarde > 21)
             {
-                Bank += ( Inzet * 2 );
+                Bank += (Inzet * 2);
                 return Naam + " heeft gewonnen en wint " + (Inzet * 2) + ". De hoogte van z'n bank is nu " + Bank;
             }
-            else if(Waarde > 16 && Waarde < 22 && Waarde == dealerWaarde)
+            else if (Waarde > 16 && Waarde < 22 && Waarde == dealerWaarde)
             {
                 Bank += Inzet;
                 return Naam + " heeft even hoog als de dealer en krijgt de inzet van " + Inzet + " terug.";
@@ -116,8 +116,8 @@ namespace Blackjack
                     AantalAas += 1;
                 }
             }
-                
-            while(totaalWaarde > 21 && AantalAas > 0)
+
+            while (totaalWaarde > 21 && AantalAas > 0)
             {
                 totaalWaarde -= 10;
                 AantalAas -= 1;

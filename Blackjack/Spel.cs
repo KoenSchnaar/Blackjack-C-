@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Blackjack.Extensions;
+using Blackjack.repository;
+using Blackjack.Data;
+
 
 namespace Blackjack
 {
@@ -13,13 +16,16 @@ namespace Blackjack
         private Speler dealer = new Speler("Dealer");
         private List<Speler> spelers = new List<Speler>();
         private Stack<Kaart> kaarten;
+        private SpelerRepository SpelerRepo = new SpelerRepository();
 
         public event MessageDelegate OnMessage;
 
         public void SpelAanmaken()
         {
             OnMessage("Welkom bij BlackJack! Voer je naam in en druk op enter.");
-            SpelerToevoegen(Console.ReadLine());
+            string inputnaam = Console.ReadLine();
+            CheckNaamDb(inputnaam);
+            SpelerToevoegen(inputnaam);
             bool starten = false;
             do
             {
@@ -28,7 +34,9 @@ namespace Blackjack
                 if (gedrukt.KeyChar == 'a')
                 {
                     OnMessage("Voer de naam van de volgende speler in en druk op enter");
-                    SpelerToevoegen(Console.ReadLine());
+                    inputnaam = Console.ReadLine();
+                    CheckNaamDb(inputnaam);
+                    SpelerToevoegen(inputnaam);
                 }
                 else if (gedrukt.KeyChar == 'r')
                 {
@@ -39,6 +47,25 @@ namespace Blackjack
                 }
             } while (starten == false);
             SpelStarten();
+        }
+
+        public void CheckNaamDb(string naam)
+        {
+            bool BestaatAl = false;
+            foreach (speler speler in SpelerRepo.GetSpelers())
+            {
+                if(naam == speler.spelernaam)
+                {
+                    BestaatAl = true;
+                    OnMessage("deze persoon bestaat al");
+                }
+            }
+            if(BestaatAl == false)
+            {
+                var newPlayer = new speler();
+                newPlayer.spelernaam = naam;
+                SpelerRepo.AddNewSpeler(newPlayer);
+            }
         }
 
         public void InzetRegelen()
