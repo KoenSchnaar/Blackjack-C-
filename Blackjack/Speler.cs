@@ -17,13 +17,13 @@ namespace Blackjack
         public int Inzet { get; set; }
         public List<Kaart> Hand = new List<Kaart>();
 
-        public Speler(string naam)
+        public Speler(string naam, int bank)
         {
             this.Naam = naam;
             this.EersteBeurt = true;
             this.LaatsteKaartGepakt = false;
             this.Busted = false;
-            this.Bank = 10;
+            this.Bank = bank;
             this.Inzet = 0;
         }
 

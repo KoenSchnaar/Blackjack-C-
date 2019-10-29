@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="SpellenModelStoreContainer" CdmEntityContainer="SpellenEntities2">
-    <EntitySetMapping Name="sessies">
-      <EntityTypeMapping TypeName="SpellenModel.sessy">
+    <EntitySetMapping Name="SessieEntities">
+      <EntityTypeMapping TypeName="SpellenModel.SessieEntity">
         <MappingFragment StoreEntitySet="sessies">
           <ScalarProperty Name="sessie_ID" ColumnName="sessie_ID" />
           <ScalarProperty Name="speler_ID" ColumnName="speler_ID" />
@@ -31,6 +31,7 @@
     <EntitySetMapping Name="uitslagens">
       <EntityTypeMapping TypeName="SpellenModel.uitslagen">
         <MappingFragment StoreEntitySet="uitslagen">
+          <ScalarProperty Name="Bank" ColumnName="Bank" />
           <ScalarProperty Name="uitslag_ID" ColumnName="uitslag_ID" />
           <ScalarProperty Name="speler_ID" ColumnName="speler_ID" />
           <ScalarProperty Name="spel_ID" ColumnName="spel_ID" />

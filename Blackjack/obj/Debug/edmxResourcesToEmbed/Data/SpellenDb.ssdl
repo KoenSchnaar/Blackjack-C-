@@ -7,8 +7,8 @@
     <Property Name="sessie_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="speler_ID" Type="int" Nullable="false" />
     <Property Name="spel_ID" Type="int" Nullable="false" />
-    <Property Name="staat" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="actief" Type="bit" Nullable="false" />
+    <Property Name="staat" Type="varchar" MaxLength="100" />
+    <Property Name="actief" Type="bit" />
   </EntityType>
   <EntityType Name="spelers">
     <Key>
@@ -31,7 +31,8 @@
     <Property Name="uitslag_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="speler_ID" Type="int" Nullable="false" />
     <Property Name="spel_ID" Type="int" Nullable="false" />
-    <Property Name="uitslag" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="uitslag" Type="varchar" MaxLength="50" />
+    <Property Name="Bank" Type="int" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>

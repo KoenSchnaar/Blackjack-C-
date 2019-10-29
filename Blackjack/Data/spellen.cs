@@ -17,7 +17,7 @@ namespace Blackjack.Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public spellen()
         {
-            this.sessies = new HashSet<sessy>();
+            this.sessies = new HashSet<SessieEntity>();
             this.uitslagens = new HashSet<uitslagen>();
         }
     
@@ -25,7 +25,7 @@ namespace Blackjack.Data
         public string spelnaam { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<sessy> sessies { get; set; }
+        public virtual ICollection<SessieEntity> sessies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<uitslagen> uitslagens { get; set; }
     }

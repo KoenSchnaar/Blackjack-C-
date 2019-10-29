@@ -13,19 +13,20 @@ namespace Blackjack
 {
     class Spel
     {
-        private Speler dealer = new Speler("Dealer");
+        private Speler dealer = new Speler("Dealer", 0);
         private List<Speler> spelers = new List<Speler>();
         private Stack<Kaart> kaarten;
-        private SpelerRepository SpelerRepo = new SpelerRepository();
-
         public event MessageDelegate OnMessage;
+        private SpelerRepository SpelerRepo = new SpelerRepository();
+        private UitslagenRepository UitslagenRepo = new UitslagenRepository();
+        private SpellenRepository SpellenRepo = new SpellenRepository();
+        private SessieRepository SessieRepo = new SessieRepository();
 
         public void SpelAanmaken()
         {
             OnMessage("Welkom bij BlackJack! Voer je naam in en druk op enter.");
             string inputnaam = Console.ReadLine();
-            CheckNaamDb(inputnaam);
-            SpelerToevoegen(inputnaam);
+            CheckDataBase(inputnaam);
             bool starten = false;
             do
             {
@@ -35,8 +36,7 @@ namespace Blackjack
                 {
                     OnMessage("Voer de naam van de volgende speler in en druk op enter");
                     inputnaam = Console.ReadLine();
-                    CheckNaamDb(inputnaam);
-                    SpelerToevoegen(inputnaam);
+                    CheckDataBase(inputnaam);
                 }
                 else if (gedrukt.KeyChar == 'r')
                 {
@@ -49,22 +49,37 @@ namespace Blackjack
             SpelStarten();
         }
 
-        public void CheckNaamDb(string naam)
+        public void CheckDataBase(string naam)
         {
-            bool BestaatAl = false;
+            int blackjackID = SpellenRepo.GetBlackjackID();
+            bool SpelerBestaat = false;
+
             foreach (speler speler in SpelerRepo.GetSpelers())
             {
                 if(naam == speler.spelernaam)
                 {
-                    BestaatAl = true;
-                    OnMessage("deze persoon bestaat al");
+                    SpelerBestaat = true;
+                    var spelerID = speler.speler_ID;
+                    if(SessieRepo.CheckSessie(spelerID, blackjackID) == false)
+                    {
+                        SessieEntity sessie = new SessieEntity();
+                        sessie.speler_ID = spelerID;
+                        sessie.spel_ID = blackjackID;
+                        SessieRepo.MakeSessie(sessie);
+                    }
+                    else
+                    {
+                        OnMessage("Welkom terug " + speler.spelernaam + ".");
+                    }
+                    SpelerToevoegen(naam, SpelerBestaat, spelerID, blackjackID); // speler toevoegen in het spel
                 }
             }
-            if(BestaatAl == false)
+            if(SpelerBestaat == false)
             {
                 var newPlayer = new speler();
                 newPlayer.spelernaam = naam;
-                SpelerRepo.AddNewSpeler(newPlayer);
+                SpelerRepo.AddNewSpeler(newPlayer, blackjackID); // speler toevoegen in de database
+                SpelerToevoegen(naam, SpelerBestaat, newPlayer.speler_ID, blackjackID); // speler toevoegen in het spel
             }
         }
 
@@ -146,9 +161,26 @@ namespace Blackjack
             return kaarten.Pop();
         }
 
-        private void SpelerToevoegen(string naam)
+        private void SpelerToevoegen(string naam, bool BestaatAl, int spelerID, int blackjackID)
         {
-            spelers.Add(new Speler(naam));
+            int bankInzet;
+            if (BestaatAl && UitslagenRepo.CheckUitslag(spelerID, blackjackID))
+            {
+                bankInzet = UitslagenRepo.GetBankBySpelerID(spelerID, blackjackID);
+                spelers.Add(new Speler(naam, bankInzet));
+                UitslagenRepo.SetBankBySpelerID(spelerID, blackjackID, bankInzet);
+            }
+            else
+            {
+                uitslagen uitslag = new uitslagen();
+                uitslag.spel_ID = blackjackID;
+                uitslag.speler_ID = spelerID;
+                UitslagenRepo.MakeUitslagRow(uitslag);
+                OnMessage("Hoeveel geld zet je op de bank? Voer in en druk op enter.");
+                bankInzet = Convert.ToInt32(Console.ReadLine());
+                spelers.Add(new Speler(naam, bankInzet));
+                UitslagenRepo.SetBankBySpelerID(spelerID, blackjackID, bankInzet);
+            }
         }
         
         public int GeldInzetten(string input)

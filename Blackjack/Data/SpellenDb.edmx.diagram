@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="0c3ebff44a244405a9b4d7a9f5026ceb" Name="Diagram1">
-        <EntityTypeShape EntityType="SpellenModel.sessy" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SpellenModel.SessieEntity" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="SpellenModel.speler" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="SpellenModel.spellen" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="SpellenModel.uitslagen" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />

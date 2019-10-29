@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="SpellenModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="sessy">
+  <EntityType Name="SessieEntity">
     <Key>
       <PropertyRef Name="sessie_ID" />
     </Key>
     <Property Name="sessie_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="speler_ID" Type="Int32" Nullable="false" />
     <Property Name="spel_ID" Type="Int32" Nullable="false" />
-    <Property Name="staat" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="actief" Type="Boolean" Nullable="false" />
+    <Property Name="staat" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="actief" Type="Boolean" />
     <NavigationProperty Name="speler" Relationship="Self.FK_sessies_spelers" FromRole="sessies" ToRole="spelers" />
     <NavigationProperty Name="spellen" Relationship="Self.FK_sessies_spellen" FromRole="sessies" ToRole="spellen" />
   </EntityType>
@@ -39,9 +39,10 @@
     <Property Name="uitslag_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="speler_ID" Type="Int32" Nullable="false" />
     <Property Name="spel_ID" Type="Int32" Nullable="false" />
-    <Property Name="uitslag" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="uitslag" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="speler" Relationship="Self.FK_uitslagen_spelers" FromRole="uitslagen" ToRole="spelers" />
     <NavigationProperty Name="spellen" Relationship="Self.FK_uitslagen_spellen" FromRole="uitslagen" ToRole="spellen" />
+    <Property Name="Bank" Type="Int32" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -55,7 +56,7 @@
   </EntityType>
   <Association Name="FK_sessies_spelers">
     <End Role="spelers" Type="Self.speler" Multiplicity="1" />
-    <End Role="sessies" Type="Self.sessy" Multiplicity="*" />
+    <End Role="sessies" Type="SpellenModel.SessieEntity" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="spelers">
         <PropertyRef Name="speler_ID" />
@@ -67,7 +68,7 @@
   </Association>
   <Association Name="FK_sessies_spellen">
     <End Role="spellen" Type="Self.spellen" Multiplicity="1" />
-    <End Role="sessies" Type="Self.sessy" Multiplicity="*" />
+    <End Role="sessies" Type="SpellenModel.SessieEntity" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="spellen">
         <PropertyRef Name="spel_ID" />
@@ -114,18 +115,18 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="SpellenEntities2" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="sessies" EntityType="Self.sessy" />
+    <EntitySet Name="SessieEntities" EntityType="SpellenModel.SessieEntity" />
     <EntitySet Name="spelers" EntityType="Self.speler" />
     <EntitySet Name="spellens" EntityType="Self.spellen" />
     <EntitySet Name="uitslagens" EntityType="Self.uitslagen" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <AssociationSet Name="FK_sessies_spelers" Association="Self.FK_sessies_spelers">
       <End Role="spelers" EntitySet="spelers" />
-      <End Role="sessies" EntitySet="sessies" />
+      <End Role="sessies" EntitySet="SessieEntities" />
     </AssociationSet>
     <AssociationSet Name="FK_sessies_spellen" Association="Self.FK_sessies_spellen">
       <End Role="spellen" EntitySet="spellens" />
-      <End Role="sessies" EntitySet="sessies" />
+      <End Role="sessies" EntitySet="SessieEntities" />
     </AssociationSet>
     <AssociationSet Name="FK_spelers_spelers" Association="Self.FK_spelers_spelers">
       <End Role="spelers" EntitySet="spelers" />

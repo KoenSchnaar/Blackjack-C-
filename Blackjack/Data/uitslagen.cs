@@ -18,6 +18,7 @@ namespace Blackjack.Data
         public int speler_ID { get; set; }
         public int spel_ID { get; set; }
         public string uitslag { get; set; }
+        public Nullable<int> Bank { get; set; }
     
         public virtual speler speler { get; set; }
         public virtual spellen spellen { get; set; }

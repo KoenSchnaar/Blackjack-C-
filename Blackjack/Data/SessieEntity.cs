@@ -12,13 +12,13 @@ namespace Blackjack.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class sessy
+    public partial class SessieEntity
     {
         public int sessie_ID { get; set; }
         public int speler_ID { get; set; }
         public int spel_ID { get; set; }
         public string staat { get; set; }
-        public bool actief { get; set; }
+        public Nullable<bool> actief { get; set; }
     
         public virtual speler speler { get; set; }
         public virtual spellen spellen { get; set; }

@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\sessy.cs">
+    <Compile Include="Data\SessieEntity.cs">
       <DependentUpon>SpellenDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\speler.cs">
@@ -87,10 +87,10 @@
     <Compile Include="MessageDelegate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="repository\SessieRepository.cs" />
-    <Compile Include="repository\SpelerRepository.cs" />
-    <Compile Include="repository\SpellenRepository.cs" />
-    <Compile Include="repository\UitslagenRepository.cs" />
+    <Compile Include="repositories\SessieRepository.cs" />
+    <Compile Include="repositories\SpelerRepository.cs" />
+    <Compile Include="repositories\SpellenRepository.cs" />
+    <Compile Include="repositories\UitslagenRepository.cs" />
     <Compile Include="Spel.cs" />
     <Compile Include="DeckKaarten.cs" />
     <Compile Include="Speler.cs" />

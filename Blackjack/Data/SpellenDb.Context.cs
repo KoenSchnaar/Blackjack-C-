@@ -25,7 +25,7 @@ namespace Blackjack.Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<sessy> sessies { get; set; }
+        public virtual DbSet<SessieEntity> SessieEntities { get; set; }
         public virtual DbSet<speler> spelers { get; set; }
         public virtual DbSet<spellen> spellens { get; set; }
         public virtual DbSet<uitslagen> uitslagens { get; set; }
