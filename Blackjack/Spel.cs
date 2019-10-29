@@ -13,7 +13,7 @@ namespace Blackjack
 {
     class Spel
     {
-        private Speler dealer = new Speler("Dealer", 0);
+        private Speler dealer = new Speler("Dealer", 0, 0);
         private List<Speler> spelers = new List<Speler>();
         private Stack<Kaart> kaarten;
         public event MessageDelegate OnMessage;
@@ -149,7 +149,7 @@ namespace Blackjack
             
             foreach (Speler speler in spelers)
             {
-                string winMessage = speler.GewonnenCheck(dealer.Waarde);
+                string winMessage = speler.GewonnenCheck(dealer.Waarde, speler.SpelerID);
                 OnMessage(winMessage);
                 Thread.Sleep(500);
             }
@@ -167,8 +167,9 @@ namespace Blackjack
             if (BestaatAl && UitslagenRepo.CheckUitslag(spelerID, blackjackID))
             {
                 bankInzet = UitslagenRepo.GetBankBySpelerID(spelerID, blackjackID);
-                spelers.Add(new Speler(naam, bankInzet));
+                spelers.Add(new Speler(naam, bankInzet, spelerID));
                 UitslagenRepo.SetBankBySpelerID(spelerID, blackjackID, bankInzet);
+                OnMessage($"Je saldo is {bankInzet}");
             }
             else
             {
@@ -178,7 +179,7 @@ namespace Blackjack
                 UitslagenRepo.MakeUitslagRow(uitslag);
                 OnMessage("Hoeveel geld zet je op de bank? Voer in en druk op enter.");
                 bankInzet = Convert.ToInt32(Console.ReadLine());
-                spelers.Add(new Speler(naam, bankInzet));
+                spelers.Add(new Speler(naam, bankInzet, spelerID));
                 UitslagenRepo.SetBankBySpelerID(spelerID, blackjackID, bankInzet);
             }
         }

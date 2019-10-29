@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blackjack.repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,11 @@ namespace Blackjack
 {
     public class Speler
     {
+        private SpellenRepository SpellenRepo = new SpellenRepository();
+        private UitslagenRepository UitslagenRepo = new UitslagenRepository();
         public int Waarde { get { return GetWaardeHand(); } }
         public string Naam { get; set; }
+        public  int SpelerID { get; set; }
         public bool EersteBeurt { get; set; }
         public bool LaatsteKaartGepakt { get; set; }
         public bool Busted { get; set; }
@@ -17,9 +21,10 @@ namespace Blackjack
         public int Inzet { get; set; }
         public List<Kaart> Hand = new List<Kaart>();
 
-        public Speler(string naam, int bank)
+        public Speler(string naam, int bank, int spelerID)
         {
             this.Naam = naam;
+            this.SpelerID = spelerID;
             this.EersteBeurt = true;
             this.LaatsteKaartGepakt = false;
             this.Busted = false;
@@ -78,11 +83,14 @@ namespace Blackjack
             return displayTekst;
         }
 
-        public string GewonnenCheck(int dealerWaarde)
+        public string GewonnenCheck(int dealerWaarde, int spelerID)
         {
+            int blackjackID = SpellenRepo.GetBlackjackID();
+
             if (Waarde > 16 && Waarde < 22 && Waarde > dealerWaarde || Waarde < 22 && dealerWaarde > 21)
             {
                 Bank += (Inzet * 2);
+                UitslagenRepo.SetBankBySpelerID(spelerID, blackjackID, Bank);
                 return Naam + " heeft gewonnen en wint " + (Inzet * 2) + ". De hoogte van z'n bank is nu " + Bank;
             }
             else if (Waarde > 16 && Waarde < 22 && Waarde == dealerWaarde)
@@ -92,6 +100,7 @@ namespace Blackjack
             }
             else
             {
+                UitslagenRepo.SetBankBySpelerID(spelerID, blackjackID, Bank);
                 return Naam + " heeft verloren en verliest de inzet van " + Inzet + ".";
             }
         }
